@@ -17,20 +17,34 @@ public class GameManager : MonoBehaviour
     #endregion
     
     public float score = 0;
+    public float meter = 0;
 
     // Callbacks
     public delegate void OnScoreChanged();
     public OnScoreChanged onScoreChangedCallback;
 
+    public delegate void PublishMeterEvent (float meter);
+    public static event PublishMeterEvent OnMeterChanged;
+
     void Start() {
         if (onScoreChangedCallback != null) {onScoreChangedCallback.Invoke();}
     }
     void Update() {
-
     }
 
     public void IncreaseScore(int points) {
         score += points;
         if (onScoreChangedCallback != null) {onScoreChangedCallback.Invoke();}
+    }
+
+    public void IncreaseMeter(float points) {
+        meter += points;
+        PublishMeter(meter);
+    }
+
+    public void PublishMeter (float meter) {
+        if (OnMeterChanged != null) {
+            OnMeterChanged (meter);
+        }
     }
 }
