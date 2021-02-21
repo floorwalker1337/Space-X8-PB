@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
     }
     #endregion
     
@@ -26,10 +25,16 @@ public class GameManager : MonoBehaviour
     public delegate void PublishMeterEvent (float meter);
     public static event PublishMeterEvent OnMeterChanged;
 
+    public delegate void OnDefeatUIChange();
+    public OnDefeatUIChange onDefeatUIChangeCallback;
+
     void Start() {
         if (onScoreChangedCallback != null) {onScoreChangedCallback.Invoke();}
     }
     void Update() {
+        if (meter >= 1) {
+            if (onDefeatUIChangeCallback != null) {onDefeatUIChangeCallback.Invoke();}
+        }
     }
 
     public void IncreaseScore(int points) {
