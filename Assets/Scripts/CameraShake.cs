@@ -8,7 +8,6 @@ public class CameraShake : MonoBehaviour {
     }
 
     void RespondToFailMeter(float meter) {
-        Debug.Log("HERE");
         if (meter > .6f && meter < .75f) {
             this.transform.position = new Vector3(Random.Range(-.05f, .05f), 0f, -10f);
         }
