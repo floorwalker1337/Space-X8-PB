@@ -20,16 +20,17 @@ public class LevelController : MonoBehaviour
 
     void OnEnable() {
         GameManager.OnMeterChanged += RespondToFailMeter;
-        GradientColorKey[] colorKey = new GradientColorKey[3];
+        GradientColorKey[] colorKey = new GradientColorKey[2];
 
-        //colorKey[0].color = Color.blue;
-        colorKey[0].color = new Color(174/255f, 255/255f, 253/255f, 255/255f);
+        //colorKey[0].color = new Color(174/255f, 255/255f, 253/255f, 255/255f);
+        colorKey[0].color = new Color(0f, 0f, 0f, 255/255f);
         colorKey[0].time = 0.0f;
-        colorKey[1].color = new Color(157/255f, 27/255f, 150/255f, 255/255f);
-        colorKey[1].time = 0.5f;
-        //colorKey[1].color = Color.red;
-        colorKey[2].color = new Color(198/255f, 32/255f, 32/255f, 255/255f);
-        colorKey[2].time = 1.0f;
+
+        colorKey[1].color = new Color(84/255f, 0f, 0f, 255/255f);
+        colorKey[1].time = 1.0f;
+
+        //colorKey[2].color = new Color(198/255f, 32/255f, 32/255f, 255/255f);
+        //colorKey[2].time = 1.0f;
         
         GradientAlphaKey[] alphaKey;
         // Populate the alpha  keys at relative time 0 and 1  (0 and 100%)
