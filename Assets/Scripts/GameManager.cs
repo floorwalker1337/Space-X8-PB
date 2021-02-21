@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseMeter(float points) {
         meter += points;
+        meter = meter < 0 ? 0 : meter;
+        meter = meter > 1 ? 1 : meter;
         PublishMeter(meter);
     }
 
