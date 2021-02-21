@@ -149,4 +149,5 @@ MonoBehaviour:
   hitPoints: 100
   speed: 1
   failMeterContribution: 0.1
+  failMeterHitSubtractionFactor: 0
   direction: {x: 0, y: 1, z: 0}

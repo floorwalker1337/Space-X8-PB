@@ -351,6 +351,7 @@ GameObject:
   - component: {fileID: 564039059}
   - component: {fileID: 564039058}
   - component: {fileID: 564039057}
+  - component: {fileID: 564039061}
   m_Layer: 5
   m_Name: Fade_Canvas
   m_TagString: Untagged
@@ -439,6 +440,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &564039061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564039056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9fa46596bcf084e8b4d83aab336e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeOutUIImage: {fileID: 1618124230}
+  fadeSpeed: 1.5
 --- !u!1 &624997183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,8 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a9989d685e7704188fd0053e6e8c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutUIImage: {fileID: 1618124230}
-  fadeSpeed: 1.5
+  fader: {fileID: 564039061}
 --- !u!1 &2092542305
 GameObject:
   m_ObjectHideFlags: 0
