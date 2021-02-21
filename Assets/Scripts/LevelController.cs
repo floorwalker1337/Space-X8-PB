@@ -5,6 +5,9 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
     private Gradient failGrad = new Gradient();
+    public GameObject[] PatternPrefabs;
+    private List<GameObject> Patterns = new List<GameObject>();
+
     public Color Color 
     {
         get {
@@ -41,6 +44,14 @@ public class LevelController : MonoBehaviour
         alphaKey[1].time = 1.0f;
 
         failGrad.SetKeys(colorKey, alphaKey);
+
+        foreach(GameObject pattern in PatternPrefabs) {
+            GameObject spawnedPattern = Instantiate(pattern, new Vector3(0f, 0f, 0f) , new Quaternion());
+            spawnedPattern.SetActive(false);
+            Patterns.Add(spawnedPattern);
+        }
+        Instantiate(Patterns[0]).SetActive(true);
+        PatternController.OnDeath += SpawnNewPattern;
     }
 
     void Update() {
@@ -54,5 +65,10 @@ public class LevelController : MonoBehaviour
 
     void RespondToFailMeter (float meter) {
         this.Color = failGrad.Evaluate(meter);
+    }
+
+    void SpawnNewPattern() {
+        Debug.Log("Spawn new pattern");
+        Instantiate(Patterns[Random.Range(0, Patterns.Count)]).SetActive(true);
     }
 }

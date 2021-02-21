@@ -12,6 +12,9 @@ public class TargetController : MonoBehaviour
     public float failMeterHitSubtractionFactor;
     public Vector3 direction;
 
+    public delegate void PublishDieEvent ();
+    public static event PublishDieEvent OnDeath;
+
     public float FailMeterContribution {
         get => this.failMeterContribution;
         set => this.failMeterContribution = value;
@@ -32,6 +35,7 @@ public class TargetController : MonoBehaviour
             GameManager.instance.IncreaseMeter(-this.FailMeterContribution * failMeterHitSubtractionFactor * Time.deltaTime);
 
             if (hits == hitPoints) {
+                PublishDeath();
                 Destroy(this.gameObject);
             }
 
@@ -39,6 +43,12 @@ public class TargetController : MonoBehaviour
         }
         else {
             speed = speed * -1.0f;
+        }
+    }
+
+    public void PublishDeath() {
+        if (OnDeath != null) {
+            OnDeath();
         }
     }
 
