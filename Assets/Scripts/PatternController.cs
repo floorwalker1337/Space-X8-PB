@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PatternController : MonoBehaviour
 {
-    public delegate void PublishDieEvent (PatternController pattern);
-    public static event PublishDieEvent OnDeath;
+    public delegate void PublishPatternDieEvent (PatternController pattern);
+    public event PublishPatternDieEvent OnPatternDeath;
     private int numTargets = 0;
 
     public void makeActivePattern()
@@ -22,13 +22,12 @@ public class PatternController : MonoBehaviour
         numTargets -= 1;
         bool noTargetsLeft = numTargets == 0;
         if (noTargetsLeft) {
-            PublishDeath();
             TargetController.OnDeath -= OnTargetDeath;
+            PublishDeath();
         }
     }
 
     void PublishDeath() {
-        Debug.Log(this.gameObject.name);
-        if (OnDeath != null) OnDeath(this);
+        if (OnPatternDeath != null) OnPatternDeath(this);
     }
 }

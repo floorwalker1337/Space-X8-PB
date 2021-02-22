@@ -53,7 +53,7 @@ public class LevelController : MonoBehaviour
         GameObject p = Instantiate(Patterns[0]);
         p.SetActive(true);
         p.GetComponent<PatternController>().makeActivePattern();
-        PatternController.OnDeath += SpawnNewPattern;
+        p.GetComponent<PatternController>().OnPatternDeath += SpawnNewPattern;
     }
 
     void Update() {
@@ -70,12 +70,12 @@ public class LevelController : MonoBehaviour
     }
 
     void SpawnNewPattern(PatternController deadPattern) {
-        Debug.Log("Spawn new pattern");
-        Destroy(deadPattern);
+        Destroy(deadPattern.gameObject);
         try{
             GameObject p = Instantiate(Patterns[Random.Range(0, Patterns.Count)]);
             p.SetActive(true);
             p.GetComponent<PatternController>().makeActivePattern();
+            p.GetComponent<PatternController>().OnPatternDeath += SpawnNewPattern;
         } catch (MissingReferenceException) {
             Patterns.Clear();
             foreach(GameObject pattern in PatternPrefabs) {
@@ -86,6 +86,7 @@ public class LevelController : MonoBehaviour
             GameObject p = Instantiate(Patterns[Random.Range(0, Patterns.Count)]);
             p.SetActive(true);
             p.GetComponent<PatternController>().makeActivePattern();
+            p.GetComponent<PatternController>().OnPatternDeath += SpawnNewPattern;
         }
     }
 }
