@@ -50,7 +50,9 @@ public class LevelController : MonoBehaviour
             spawnedPattern.SetActive(false);
             Patterns.Add(spawnedPattern);
         }
-        Instantiate(Patterns[0]).SetActive(true);
+        GameObject p = Instantiate(Patterns[0]);
+        p.SetActive(true);
+        p.GetComponent<PatternController>().makeActivePattern();
         PatternController.OnDeath += SpawnNewPattern;
     }
 
@@ -67,8 +69,23 @@ public class LevelController : MonoBehaviour
         this.Color = failGrad.Evaluate(meter);
     }
 
-    void SpawnNewPattern() {
+    void SpawnNewPattern(PatternController deadPattern) {
         Debug.Log("Spawn new pattern");
-        Instantiate(Patterns[Random.Range(0, Patterns.Count)]).SetActive(true);
+        Destroy(deadPattern);
+        try{
+            GameObject p = Instantiate(Patterns[Random.Range(0, Patterns.Count)]);
+            p.SetActive(true);
+            p.GetComponent<PatternController>().makeActivePattern();
+        } catch (MissingReferenceException) {
+            Patterns.Clear();
+            foreach(GameObject pattern in PatternPrefabs) {
+                GameObject spawnedPattern = Instantiate(pattern, new Vector3(0f, 0f, 0f) , new Quaternion());
+                spawnedPattern.SetActive(false);
+                Patterns.Add(spawnedPattern);
+            }
+            GameObject p = Instantiate(Patterns[Random.Range(0, Patterns.Count)]);
+            p.SetActive(true);
+            p.GetComponent<PatternController>().makeActivePattern();
+        }
     }
 }

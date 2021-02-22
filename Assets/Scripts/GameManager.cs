@@ -30,11 +30,7 @@ public class GameManager : MonoBehaviour
 
     void Start() {
         if (onScoreChangedCallback != null) {onScoreChangedCallback.Invoke();}
-    }
-    void Update() {
-        if (meter >= 1) {
-            if (onDefeatUIChangeCallback != null) {onDefeatUIChangeCallback.Invoke();}
-        }
+        OnMeterChanged += MeterFull;
     }
 
     public void IncreaseScore(int points) {
@@ -52,6 +48,20 @@ public class GameManager : MonoBehaviour
     public void PublishMeter (float meter) {
         if (OnMeterChanged != null) {
             OnMeterChanged (meter);
+        }
+    }
+
+    public void MeterFull (float meter) {
+        if (meter >= 1) {
+            OnMeterChanged = null;
+            if (onDefeatUIChangeCallback != null) {onDefeatUIChangeCallback.Invoke();}
+            GameObject[] objs = GameObject.FindObjectsOfType<GameObject>();
+            foreach(GameObject o in objs){
+                if (o.GetComponentsInChildren<PlayerController>().Length > 0) Destroy(o);
+                if (o.GetComponentsInChildren<TargetController>().Length > 0) Destroy(o);
+                if (o.GetComponentsInChildren<BulletController>().Length > 0) Destroy(o);
+                if (o.GetComponentsInChildren<PatternController>().Length > 0) Destroy(o);
+            }
         }
     }
 }

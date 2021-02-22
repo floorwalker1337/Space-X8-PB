@@ -4,30 +4,31 @@ using UnityEngine;
 
 public class PatternController : MonoBehaviour
 {
-    public delegate void PublishDieEvent ();
+    public delegate void PublishDieEvent (PatternController pattern);
     public static event PublishDieEvent OnDeath;
+    private int numTargets = 0;
 
-    void OnEnable()
+    public void makeActivePattern()
     {
+        numTargets = GetComponentsInChildren<TargetController>().Length;
         TargetController.OnDeath += OnTargetDeath;
     }
 
-    void OnDisable()
-    {
+    void OnDestroy() {
         TargetController.OnDeath -= OnTargetDeath;
     }
 
     void OnTargetDeath() {
-        bool noTargetsLeft = GetComponentsInChildren<TargetController>().Length == 1;
+        numTargets -= 1;
+        bool noTargetsLeft = numTargets == 0;
         if (noTargetsLeft) {
             PublishDeath();
             TargetController.OnDeath -= OnTargetDeath;
-            Destroy(this.gameObject);
         }
     }
 
     void PublishDeath() {
         Debug.Log(this.gameObject.name);
-        if (OnDeath != null) OnDeath();
+        if (OnDeath != null) OnDeath(this);
     }
 }
