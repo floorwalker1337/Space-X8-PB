@@ -68,18 +68,13 @@ public class PlayerController : MonoBehaviour
         frameCounter += 1;
 
         if (Input.GetKeyDown("x")) {
-            if (currentShape != "x" ) {
-                currentShape = ChangeShape("x");
-            }
-            else {
-                isMoving = isMoving ? false : true;
-            }
+            isMoving = isMoving ? false : true;
         }
         if (Input.GetKeyDown("b")) {
-
+            ChangeShape("B");
         }
         if (Input.GetKeyDown("p")) {
-
+            ChangeShape("P");
         }
         if (Input.GetKeyDown("8")) {
             direction = Vector3.Cross(direction, Vector3.forward);
@@ -121,8 +116,16 @@ public class PlayerController : MonoBehaviour
             }
     }
 
-    public string ChangeShape(string newShape) {
-        return newShape;
+    public void ChangeShape(string newShape) {
+        GameObject[] objs = this.gameObject.scene.GetRootGameObjects();
+        foreach (GameObject o in objs) {
+            if (o.name == newShape) {
+                o.SetActive(true);
+                o.transform.position = this.transform.position;
+                o.transform.rotation = this.transform.rotation;
+            }
+        }
+        this.gameObject.SetActive(false);
     }
 
     public void TranslatePlayer() {

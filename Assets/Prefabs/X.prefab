@@ -230,3 +230,5 @@ MonoBehaviour:
   direction: {x: 0, y: 1, z: 0}
   yMax: 2.6
   xMax: 5.2
+  p: {fileID: 0}
+  b: {fileID: 0}

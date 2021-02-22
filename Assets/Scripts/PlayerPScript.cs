@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBController : MonoBehaviour
+public class PlayerPScript : MonoBehaviour
 {
     public GameObject bulletPrefab;
     private Gradient bulletGrad= new Gradient();
@@ -71,10 +71,10 @@ public class PlayerBController : MonoBehaviour
             ChangeShape("X");
         }
         if (Input.GetKeyDown("b")) {
-            isMoving = isMoving ? false : true;
+            ChangeShape("B");
         }
         if (Input.GetKeyDown("p")) {
-            ChangeShape("P");
+            isMoving = isMoving ? false : true;
         }
         if (Input.GetKeyDown("8")) {
             direction = Vector3.Cross(direction, Vector3.forward);
@@ -115,13 +115,9 @@ public class PlayerBController : MonoBehaviour
         GameObject bullet2 = Instantiate(bulletPrefab);
         bullet2.GetComponent<BulletController>().Color = bulletGrad.Evaluate(gradCounter);
         bullet2.transform.position = vt.transform.position;
-        bullet2.GetComponent<BulletController>().SetDireciton(dir);
-
-        vt = this.transform.Find("Bottom");
-        GameObject bullet3 = Instantiate(bulletPrefab);
-        bullet3.GetComponent<BulletController>().Color = bulletGrad.Evaluate(gradCounter);
-        bullet3.transform.position = vt.transform.position;
-        bullet3.GetComponent<BulletController>().SetDireciton(dir);
+        Vector2 dir2 = vt.position - this.transform.Find("Middle_O").position;
+        dir2.Normalize();
+        bullet2.GetComponent<BulletController>().SetDireciton(dir2);
     }
 
     public void ChangeShape(string newShape) {
