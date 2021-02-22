@@ -222,7 +222,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 61358676737400447, guid: 380098fe82528cd439e9fc672e46f208, type: 3}
   rotSpeed: 0.5
   speed: 1
-  framesPerBulletSpawn: 10
+  timeDeltaCollector: 0
+  shootThreshold: 0.02
   frameCounter: 0
   currentShape: x
   isMoving: 0
@@ -230,5 +231,3 @@ MonoBehaviour:
   direction: {x: 0, y: 1, z: 0}
   yMax: 2.6
   xMax: 5.2
-  p: {fileID: 0}
-  b: {fileID: 0}
