@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
     private float gradCounter = 0.0f;
     public float rotSpeed = 1.0f;
     public float speed = 1.0f;
-    public int framesPerBulletSpawn = 10;
+    //public int framesPerBulletSpawn = 10;
+    public float timeDeltaCollector = 0;
+    public float shootThreshold = 1f;
     public int frameCounter = 0;
     public string currentShape = "x";
     public bool isMoving = false;
@@ -86,8 +88,10 @@ public class PlayerController : MonoBehaviour
             rotSpeed = Mathf.Abs(rotSpeed);
         }
 
-        if (frameCounter % framesPerBulletSpawn == 0) {
+        timeDeltaCollector += Time.deltaTime;
+        if (timeDeltaCollector >= shootThreshold) {
             Shoot();
+            timeDeltaCollector = 0f;
         }
         // Movement
         if (Mathf.Abs(transform.position.y) > yMax ) {
