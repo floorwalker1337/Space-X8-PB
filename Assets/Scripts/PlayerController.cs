@@ -127,7 +127,6 @@ public class PlayerController : MonoBehaviour
 
     public void TranslatePlayer() {
         transform.position += direction * speed * Time.deltaTime;
-        Debug.Log(direction * speed);
     }
 
 }

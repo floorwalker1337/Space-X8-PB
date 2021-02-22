@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
     }
     #endregion
     
@@ -26,10 +25,12 @@ public class GameManager : MonoBehaviour
     public delegate void PublishMeterEvent (float meter);
     public static event PublishMeterEvent OnMeterChanged;
 
+    public delegate void OnDefeatUIChange();
+    public OnDefeatUIChange onDefeatUIChangeCallback;
+
     void Start() {
         if (onScoreChangedCallback != null) {onScoreChangedCallback.Invoke();}
-    }
-    void Update() {
+        OnMeterChanged += MeterFull;
     }
 
     public void IncreaseScore(int points) {
@@ -47,6 +48,20 @@ public class GameManager : MonoBehaviour
     public void PublishMeter (float meter) {
         if (OnMeterChanged != null) {
             OnMeterChanged (meter);
+        }
+    }
+
+    public void MeterFull (float meter) {
+        if (meter >= 1) {
+            OnMeterChanged = null;
+            if (onDefeatUIChangeCallback != null) {onDefeatUIChangeCallback.Invoke();}
+            GameObject[] objs = GameObject.FindObjectsOfType<GameObject>();
+            foreach(GameObject o in objs){
+                if (o.GetComponentsInChildren<PlayerController>().Length > 0) Destroy(o);
+                if (o.GetComponentsInChildren<TargetController>().Length > 0) Destroy(o);
+                if (o.GetComponentsInChildren<BulletController>().Length > 0) Destroy(o);
+                if (o.GetComponentsInChildren<PatternController>().Length > 0) Destroy(o);
+            }
         }
     }
 }
